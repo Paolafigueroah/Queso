@@ -4,6 +4,9 @@
  */
 package mx.itson.queso.negocio;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *  Contiene métodos y operaciones para generar la CURP.
  * @author Claudia Figueroa, Danett Arana. Arleth Bejarano.
@@ -21,7 +24,46 @@ public class Operacion {
      * @param sexo
      * @return Los datos de la persona concatenados formando el CURP
      */ 
-    
+    private static final Map<String, String> estadosMap = new HashMap<>();
+
+    static {
+        
+        estadosMap.put("AGUASCALIENTES", "AS");
+        estadosMap.put("BAJA CALIFORNIA", "BC");
+        estadosMap.put("BAJA CALIFORNIA SUR", "BS");
+        estadosMap.put("CAMPECHE", "CC");
+        estadosMap.put("COAHUILA", "CL");
+        estadosMap.put("COLIMA", "CM");
+        estadosMap.put("CHIAPAS", "CS");
+        estadosMap.put("CHIHUAHUA", "CH");
+        estadosMap.put("DISTRITO FEDERAL", "DF");
+        estadosMap.put("DURANGO", "DG");
+        estadosMap.put("GUANAJUATO", "GT");
+        estadosMap.put("GUERRERO", "GR");
+        estadosMap.put("HIDALGO", "HG");
+        estadosMap.put("JALISCO", "JC");
+        estadosMap.put("ESTADO DE MEXICO", "MC");
+        estadosMap.put("MICHOACÁN", "MN");
+        estadosMap.put("MORELOS", "MS");
+        estadosMap.put("NAYARIT", "NT");
+        estadosMap.put("NUEVO LEÓN", "NL");
+        estadosMap.put("OAXACA", "OC");
+        estadosMap.put("PUEBLA", "PL");
+        estadosMap.put("QUERÉTARO", "QT");
+        estadosMap.put("QUINTANA ROO", "QR");
+        estadosMap.put("SAN LUIS POTOSÍ", "SP");
+        estadosMap.put("SINALOA", "SL");
+        estadosMap.put("SONORA", "SR");
+        estadosMap.put("TABASCO", "TC");
+        estadosMap.put("TAMAULIPAS", "TS");
+        estadosMap.put("TLAXCALA", "TL");
+        estadosMap.put("VERACRUZ", "VZ");
+        estadosMap.put("YUCATÁN", "YN");
+        estadosMap.put("ZACATECAS", "ZS");
+        estadosMap.put("NACIDO EXTRANJERO", "NE");
+    }
+        
+        
     public String generarCurp (String nombre, String apellidoPaterno, String apellidoMaterno, String dia, String mes, String año, String estado, String sexo){
         
         char[] letrasApellidoP = apellidoPaterno.toCharArray();
@@ -97,111 +139,14 @@ public class Operacion {
         }else {
             sexo = "M";
         }
-
-        switch(estado)
-        {
-        case "AGUAS CALIENTES":
-                 estado = "AS";      
-               break;
-        case "BAJA CALIFORNIA":
-            estado = "BC";
-            break;
-        case "BAJA CALIFORNIA SUR":
-            estado = "BS";
-            break;
-        case "CAMPECHE":
-            estado = "CC";
-            break;
-        case "COAHUILA":
-            estado = "CL";
-            break;
-        case "COLIMA":
-            estado = "CM";
-            break;
-        case "CHIAPAS":
-            estado = "CS";
-            break;
-        case "CHIHUAHUA":
-            estado = "CH";
-            break;
-        case "DISTRITO FEDERAL":
-            estado = "DF";
-            break;
-        case "DURANGO":
-            estado = "DG";
-            break;
-        case "GUANAJUATO":
-            estado= "GT";
-            break;
-        case "GUERRERO":
-            estado = "GR";
-            break;
-        case "HIDALGO":
-            estado = "HG";
-            break;
-        case "JALISCO":
-            estado = "JC";
-            break;
-        case "ESTADO DE MEXICO":
-            estado="MC";
-            break;
-        case "MICHOACÁN":
-            estado="MN";
-            break;
-        case "MORELOS":
-            estado="MS";
-            break;
-        case "NAYARIT":
-            estado="NT";
-            break;
-        case "NUEVO LEÓN":
-            estado="NL";
-            break;
-        case "OAXACA":
-            estado="OC";
-            break;
-        case "PUEBLA":
-            estado="PL";
-            break;
-        case "QUERÉTARO":
-            estado="QT";
-            break;
-        case "QUINTANA ROO":
-            estado="QR";
-            break;
-        case "SAN LUIS POTOSÍ":
-            estado="SP";
-            break;
-        case "SINALOA":
-            estado = "SL";
-            break;
-        case "SONORA":
-            estado = "SR";
-            break;
-        case "TABASCO":
-            estado = "TC";
-            break;
-        case "TAMAULIPAS":
-            estado = "TS";
-            break;
-        case "TLAXCALA":
-            estado ="TL";
-            break;
-        case "VERACRUZ":
-            estado="VZ";
-            break;
-        case "YUCATÁN":
-            estado="YN";
-            break;
-        case "ZACATECAS":
-            estado="ZS";
-            break;
-           
-        case "NACIDO EXTRANJERO":
-            estado ="NE";
-            break;
+        
+        if (estadosMap.containsKey(estado)) {
+            estado = estadosMap.get(estado);
+        } else {
+            // Si el estado no se encuentra en el mapa, maneja el caso de error aquí
+            throw new IllegalArgumentException("Estado no válido: " + estado);
         }
-            
+       
         String curpEntero = primerLetraP + letra2 + primerLetraM + nombre + fecha + sexo + estado + primerConsonanteP + primerConsonanteM + primerConsonanteN + penultimoCaracter + "1";
         return curpEntero;
         }
